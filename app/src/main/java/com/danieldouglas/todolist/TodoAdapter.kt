@@ -26,11 +26,23 @@ class TodoAdapter(
         )
     }
 
+    fun addTodo(todo: Todo) {
+        todos.add(todo)
+        notifyItemInserted(todos.size - 1)
+    }
+
+    fun deleteDoneTodos() {
+        todos.removeAll { todo ->
+            todo.isChecked
+        }
+        notifyDataSetChanged()
+    }
+
     private fun toggleStrikeThrough(tvTodoTitle: TextView, isChecked: Boolean) {
         if (isChecked) {
             tvTodoTitle.paintFlags = tvTodoTitle.paintFlags or STRIKE_THRU_TEXT_FLAG
         } else {
-            tvTodoTitle.paintFlags = tvTodoTitle.paintFlags or STRIKE_THRU_TEXT_FLAG.inv()
+            tvTodoTitle.paintFlags = tvTodoTitle.paintFlags and STRIKE_THRU_TEXT_FLAG.inv()
         }
     }
 
